@@ -5,8 +5,19 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
-
+Tea.destroy_all
 Customer.destroy_all
+
+5.times do |i|
+
+    Tea.create!(
+      title: Faker::Tea.variety,
+      description: Faker::GreekPhilosophers.quote,
+      brew_time: Faker::Number.between(from: 1, to: 4),
+      temperature: Faker::Number.between(from: 80, to: 85),
+    )
+
+end
 
 5.times do |i|
 
@@ -17,5 +28,5 @@ Customer.destroy_all
       email: "user#{i + 1}@email.com",
       password: "password#{i + 1}",
     )
-    
+
 end
