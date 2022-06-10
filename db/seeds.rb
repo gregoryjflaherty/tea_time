@@ -8,16 +8,6 @@
 Tea.destroy_all
 Customer.destroy_all
 
-5.times do |i|
-
-    Tea.create!(
-      title: Faker::Tea.variety,
-      description: Faker::GreekPhilosophers.quote,
-      brew_time: Faker::Number.between(from: 1, to: 4),
-      temperature: Faker::Number.between(from: 80, to: 85),
-    )
-
-end
 
 5.times do |i|
 
@@ -30,3 +20,9 @@ end
     )
 
 end
+
+Tea.create!(title: "Green",description: Faker::GreekPhilosophers.quote,brew_time: Faker::Number.between(from: 1, to: 4),temperature: Faker::Number.between(from: 80, to: 85))
+Tea.create!(title: "Black",description: Faker::GreekPhilosophers.quote,brew_time: Faker::Number.between(from: 1, to: 4),temperature: Faker::Number.between(from: 80, to: 85))
+Tea.create!(title: "Chai",description: Faker::GreekPhilosophers.quote,brew_time: Faker::Number.between(from: 1, to: 4),temperature: Faker::Number.between(from: 80, to: 85))
+Tea.create!(title: "Chamomile",description: Faker::GreekPhilosophers.quote,brew_time: Faker::Number.between(from: 1, to: 4),temperature: Faker::Number.between(from: 80, to: 85))
+Tea.create!(title: "Herbal",description: Faker::GreekPhilosophers.quote,brew_time: Faker::Number.between(from: 1, to: 4),temperature: Faker::Number.between(from: 80, to: 85))
