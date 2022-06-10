@@ -55,6 +55,35 @@ RSpec.describe 'Update Subscription', type: :request do
     expect(expected2[:message]).to eq("Please specify change(s)")
   end
 
+  scenario 'Sad Path ~ Frequency not between 1-3 ~ 404' do
+    headers = { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json'}
+
+    @request_body = {
+                     "email": 'fake@user.com',
+                     "password": 'test'
+                     }
+
+    post api_v1_log_in_path, :params => @request_body, as: :json
+
+    expected = JSON.parse(response.body, symbolize_names: true)
+
+    expect(response).to be_successful
+    expect(response.status).to eq(200)
+    expect(expected.keys).to include(:message)
+    expect(expected[:message]).to eq("fake@user.com has been logged in")
+
+    @params = {"frequency": 4}
+
+    patch api_v1_subscription_path(@subscription.id), :params => @params, as: :json
+
+    expected2 = JSON.parse(response.body, symbolize_names: true)
+
+    expect(response).not_to be_successful
+    expect(response.status).to eq(404)
+    expect(expected2.keys).to include(:message)
+    expect(expected2[:message]).to eq("Please provide a frequency between 1 and 3")
+  end
+
   scenario 'Happy Path ~ Successful subscription update ~ Frequency' do
     headers = { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json'}
 
