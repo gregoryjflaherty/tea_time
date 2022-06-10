@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Login', type: :request do
+RSpec.describe 'Create Subscription', type: :request do
   scenario 'Sad Path ~ Must log in to create subscription' do
     headers = { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json'}
 

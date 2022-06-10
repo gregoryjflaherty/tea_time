@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Login', type: :request do
+RSpec.describe 'Update Subscription', type: :request do
   before(:each) do
     @tea = Tea.create!(title: "Green",description: Faker::GreekPhilosophers.quote,brew_time: Faker::Number.between(from: 1, to: 4),temperature: Faker::Number.between(from: 80, to: 85))
     @customer = Customer.create(
