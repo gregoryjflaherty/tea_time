@@ -1,5 +1,6 @@
 class Api::V1::SubscriptionsController < ApplicationController
   before_action :authorize
+  before_action :check_frequency
   before_action :check_tea, only: [:create]
 
 
@@ -10,6 +11,21 @@ class Api::V1::SubscriptionsController < ApplicationController
     render json: SubscriptionsSerializer.new(subscription), status: 201
   end
 
+  def update
+    subscription = Subscription.find_by(id: params[:id])
+    if params[:status]
+      subscription[:status] = 'cancelled'
+      subscription.save
+      render json: SubscriptionsSerializer.new(subscription), status: 200
+    elsif params[:frequency]
+      subscription[:frequency] = params[:frequency]
+      subscription.save
+      render json: SubscriptionsSerializer.new(subscription), status: 200
+    else
+      render json: {message: "Please specify change(s)"}, status: 404
+    end
+  end
+
   private
 
   def check_tea
@@ -18,6 +34,14 @@ class Api::V1::SubscriptionsController < ApplicationController
       render json: {message: "Tea not found"}, status: 404
     else
       @tea
+    end
+  end
+
+  def check_frequency
+    if params[:frequency]
+      if ![1, 2, 3].include?(params[:frequency].to_i)
+        render json: {message: "Please provide a frequency between 1 and 3"}, status: 404
+      end
     end
   end
 end
