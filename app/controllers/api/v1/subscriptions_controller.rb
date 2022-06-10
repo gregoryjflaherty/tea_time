@@ -3,7 +3,10 @@ class Api::V1::SubscriptionsController < ApplicationController
   before_action :check_frequency
   before_action :check_tea, only: [:create]
 
-
+  def index
+    customer = Customer.find_by(id: session[:customer_id])
+    render json: SubscriptionsSerializer.new(customer.subscriptions), status: 200
+  end
 
   def create
     customer = Customer.find_by(id: session[:customer_id])
