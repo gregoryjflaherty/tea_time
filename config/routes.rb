@@ -3,4 +3,11 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
+  namespace :api do
+    namespace :v1 do
+      resources :subscriptions, except: [:destroy, :show]
+      post :log_in, to: "sessions#create"
+      post :log_out, to: "sessions#destroy"
+    end
+  end
 end
