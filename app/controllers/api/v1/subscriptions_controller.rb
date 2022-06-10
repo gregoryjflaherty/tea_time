@@ -3,7 +3,7 @@ class Api::V1::SubscriptionsController < ApplicationController
   before_action :check_frequency
   before_action :check_tea, only: [:create]
 
-  
+
 
   def create
     customer = Customer.find_by(id: session[:customer_id])
@@ -16,13 +16,14 @@ class Api::V1::SubscriptionsController < ApplicationController
     if params[:status]
       subscription[:status] = 'cancelled'
       subscription.save
+      render json: SubscriptionsSerializer.new(subscription), status: 200
     elsif params[:frequency]
       subscription[:frequency] = params[:frequency]
       subscription.save
+      render json: SubscriptionsSerializer.new(subscription), status: 200
     else
       render json: {message: "Please specify change(s)"}, status: 404
     end
-    render json: SubscriptionsSerializer.new(subscription), status: 200
   end
 
   private
@@ -38,7 +39,7 @@ class Api::V1::SubscriptionsController < ApplicationController
 
   def check_frequency
     if params[:frequency]
-      if ![1..3].include?(params[:frequency].to_i)
+      if ![1, 2, 3].include?(params[:frequency].to_i)
         render json: {message: "Please provide a frequency between 1 and 3"}, status: 404
       end
     end
