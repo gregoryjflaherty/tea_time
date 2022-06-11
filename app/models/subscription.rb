@@ -8,7 +8,7 @@ class Subscription < ApplicationRecord
   def set_title
     customer = Customer.find_by(id: self.customer_id)
     tea = Tea.find_by(id: self.tea_id)
-    self.title = "#{customer.first_name}'s #{tea.title} Subscription"
+    self.title = "#{customer.first_name}'s #{tea.title} Tea Subscription"
   end
 
   def set_price
