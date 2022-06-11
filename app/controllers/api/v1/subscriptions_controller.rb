@@ -1,6 +1,6 @@
 class Api::V1::SubscriptionsController < ApplicationController
   before_action :authorize
-  before_action :check_frequency
+  before_action :check_frequency, except: [:index]
   before_action :check_tea, only: [:create]
 
   def index
@@ -45,6 +45,8 @@ class Api::V1::SubscriptionsController < ApplicationController
       if ![1, 2, 3].include?(params[:frequency].to_i)
         render json: {message: "Please provide a frequency between 1 and 3"}, status: 404
       end
+    elsif !params[:frequency] && params[:action] == 'create'
+        render json: {message: "Please provide a frequency between 1 and 3"}, status: 404
     end
   end
 end
